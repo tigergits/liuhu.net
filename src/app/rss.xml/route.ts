@@ -1,3 +1,5 @@
+export const dynamic = 'force-static'
+
 import { getAllPosts } from '@/lib/posts'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.liuhu.net'

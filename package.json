@@ -7,8 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "postbuild": "node scripts/generate-rss.mjs && node scripts/generate-sitemap.mjs"
+    "lint": "next lint"
   },
   "dependencies": {
     "next": "^15.1.0",
