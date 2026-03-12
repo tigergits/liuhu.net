@@ -1,0 +1,33 @@
+# Cloudflare Pages 重定向规则
+# 将所有旧的 .htm URL 301 重定向到新的无扩展名路由
+
+# 分类首页重定向
+/essay.htm    /essay    301
+/mystory.htm  /mystory  301
+/daily.htm    /daily    301
+/trip.htm     /trip     301
+/lhwz.htm    /lhwz     301
+/about.htm   /about    301
+
+# 文章页重定向（使用 splat 通配符）
+# essay 分类文章
+/essay/:slug.htm    /essay/:slug    301
+
+# mystory 分类文章
+/mystory/:slug.htm  /mystory/:slug  301
+
+# daily 分类文章
+/daily/:slug.htm    /daily/:slug    301
+
+# lhwz 分类文章（技术文摘）
+/lhwz/:slug.htm     /lhwz/:slug     301
+
+# trip / others 分类文章（游记文章存放在 /others/ 路径下）
+/others/:slug.htm   /others/:slug   301
+
+# about 分类文章
+/about/:slug.htm    /about/:slug    301
+
+# 首页重定向
+/index.htm    /    301
+/default.htm  /    301
