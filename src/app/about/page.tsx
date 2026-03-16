@@ -311,7 +311,7 @@ export default function AboutPage() {
                   {displayPosts.map((post, index) => (
                     <Link
                       key={post.slug}
-                      href={`/mystory/${post.slug}`}
+                      href={`/about/${post.slug}.htm`}
                       className="group block bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md hover:border-blue-300 dark:hover:border-blue-600 transition-all"
                     >
                       <div className="flex items-center gap-3 mb-3">
@@ -347,7 +347,7 @@ export default function AboutPage() {
                         .map((post) => (
                           <Link
                             key={post.slug}
-                            href={`/mystory/${post.slug}`}
+                            href={`/about/${post.slug}.htm`}
                             className="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group"
                           >
                             <span className="text-slate-700 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
