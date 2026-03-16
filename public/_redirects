@@ -1,33 +1,51 @@
-# Cloudflare Pages 重定向规则
-# 将所有旧的 .htm URL 301 重定向到新的无扩展名路由
+# Cloudflare Pages URL 兼容规则
+# 目标：
+# 1) 保留历史 .htm URL（对搜索引擎和旧外链友好）
+# 2) 新的无扩展名 URL 统一 301 到 .htm（统一收录入口）
 
-# 分类首页重定向
-/essay.htm    /essay    301
-/mystory.htm  /mystory  301
-/daily.htm    /daily    301
-/trip.htm     /trip     301
-/lhwz.htm    /lhwz     301
-/about.htm   /about    301
+# ------------------------------------------------------------
+# A. 新 URL -> 旧 .htm（301）
+# ------------------------------------------------------------
 
-# 文章页重定向（使用 splat 通配符）
-# essay 分类文章
-/essay/:slug.htm    /essay/:slug    301
+# 分类页
+/essay     /essay.htm    301
+/mystory   /mystory.htm  301
+/daily     /daily.htm    301
+/trip      /trip.htm     301
+/lhwz      /lhwz.htm     301
+/about     /about.htm    301
 
-# mystory 分类文章
-/mystory/:slug.htm  /mystory/:slug  301
+# 文章页
+/essay/:slug    /essay/:slug.htm    301
+/mystory/:slug  /mystory/:slug.htm  301
+/daily/:slug    /daily/:slug.htm    301
+/trip/:slug     /trip/:slug.htm     301
+/lhwz/:slug     /lhwz/:slug.htm     301
+/about/:slug    /about/:slug.htm    301
 
-# daily 分类文章
-/daily/:slug.htm    /daily/:slug    301
+# ------------------------------------------------------------
+# B. 旧 .htm URL -> 新路由内容（200 rewrite，地址栏不变）
+# ------------------------------------------------------------
 
-# lhwz 分类文章（技术文摘）
-/lhwz/:slug.htm     /lhwz/:slug     301
+# 分类页（保留 .htm 显示）
+/essay.htm    /essay    200
+/mystory.htm  /mystory  200
+/daily.htm    /daily    200
+/trip.htm     /trip     200
+/lhwz.htm     /lhwz     200
+/about.htm    /about    200
 
-# trip / others 分类文章（游记文章存放在 /others/ 路径下）
-/others/:slug.htm   /others/:slug   301
+# 文章页（保留 .htm 显示）
+/essay/:slug.htm    /essay/:slug    200
+/mystory/:slug.htm  /mystory/:slug  200
+/daily/:slug.htm    /daily/:slug    200
+/trip/:slug.htm     /trip/:slug     200
+/lhwz/:slug.htm     /lhwz/:slug     200
+/about/:slug.htm    /about/:slug    200
 
-# about 分类文章
-/about/:slug.htm    /about/:slug    301
+# 历史路径兼容：旧站部分游记使用 /others/
+/others/:slug.htm   /trip/:slug     200
 
-# 首页重定向
+# 首页旧文件名兼容
 /index.htm    /    301
 /default.htm  /    301

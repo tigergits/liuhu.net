@@ -33,7 +33,7 @@ export default function NotFound() {
           </Link>
         </Button>
         <Button asChild variant="outline" size="lg">
-          <Link href="/essay">
+          <Link href="/essay.htm">
             <ArrowLeft className="mr-2 h-4 w-4" />
             浏览文章
           </Link>

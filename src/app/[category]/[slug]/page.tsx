@@ -16,14 +16,15 @@ interface ArticlePageProps {
 
 export async function generateStaticParams() {
   const allPosts = getAllPosts()
-  return allPosts.map((post) => ({
-    category: post.category,
-    slug: post.slug,
-  }))
+  return [
+    ...allPosts.map((post) => ({ category: post.category, slug: post.slug })),
+    ...allPosts.map((post) => ({ category: post.category, slug: `${post.slug}.htm` })),
+  ]
 }
 
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
-  const { category, slug } = await params
+  const { category, slug: rawSlug } = await params
+  const slug = rawSlug.replace(/\.htm$/, "")
   const post = getPostBySlug(category as CategoryCode, slug)
   if (!post) return {}
 
@@ -64,7 +65,8 @@ function estimateReadingTime(content: string): number {
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
-  const { category, slug } = await params
+  const { category, slug: rawSlug } = await params
+  const slug = rawSlug.replace(/\.htm$/, "")
 
   const cat = CATEGORIES[category as keyof typeof CATEGORIES]
   if (!cat) {
@@ -120,7 +122,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         '@type': 'ListItem',
         position: 2,
         name: cat.name,
-        item: `${siteUrl}/${category}`,
+        item: `${siteUrl}/${category}.htm`,
       },
       {
         '@type': 'ListItem',
@@ -140,7 +142,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         <Breadcrumb
           items={[
             { label: '首页', href: '/' },
-            { label: cat.name, href: `/${category}` },
+            { label: cat.name, href: `/${category}.htm` },
             { label: post.title },
           ]}
         />
@@ -159,7 +161,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   <time dateTime={post.date}>{post.date}</time>
                 </div>
                 <Link
-                  href={`/${category}`}
+                  href={`/${category}.htm`}
                   className="flex items-center gap-1.5 hover:text-primary transition-colors"
                 >
                   <FolderOpen className="w-4 h-4" />
@@ -239,7 +241,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   半路出家的IT从业人员，迷上写程序后一发不可收拾。
                 </p>
                 <Link
-                  href="/about"
+                  href="/about.htm"
                   className="inline-block mt-3 text-sm text-primary hover:underline"
                 >
                   了解更多 →
@@ -274,7 +276,7 @@ function PostNavigation({
     <nav className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4" aria-label="文章导航">
       {prevPost ? (
         <Link
-          href={`/${category}/${prevPost.slug}`}
+          href={`/${category}/${prevPost.slug}.htm`}
           className="group flex flex-col p-4 rounded-lg border border-border hover:border-primary/50 hover:bg-accent/50 transition-all"
         >
           <span className="text-xs text-muted-foreground mb-1">← 上一篇</span>
@@ -287,7 +289,7 @@ function PostNavigation({
       )}
       {nextPost ? (
         <Link
-          href={`/${category}/${nextPost.slug}`}
+          href={`/${category}/${nextPost.slug}.htm`}
           className="group flex flex-col items-end text-right p-4 rounded-lg border border-border hover:border-primary/50 hover:bg-accent/50 transition-all"
         >
           <span className="text-xs text-muted-foreground mb-1">下一篇 →</span>

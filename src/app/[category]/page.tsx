@@ -23,17 +23,20 @@ interface CategoryPageProps {
 }
 
 export async function generateStaticParams() {
-  return Object.keys(CATEGORIES)
-    .filter((category) => category !== "about")
-    .map((category) => ({
-      category,
-    }));
+  const categories = Object.keys(CATEGORIES).filter(
+    (category) => category !== "about",
+  );
+  return [
+    ...categories.map((category) => ({ category })),
+    ...categories.map((category) => ({ category: `${category}.htm` })),
+  ];
 }
 
 export async function generateMetadata({
   params,
 }: { params: Promise<{ category: string }> }): Promise<Metadata> {
-  const { category } = await params;
+  const { category: rawCategory } = await params;
+  const category = rawCategory.replace(/\.htm$/, "");
   const cat = CATEGORIES[category as keyof typeof CATEGORIES];
   if (!cat) return {};
 
@@ -68,7 +71,8 @@ export async function generateMetadata({
 export default async function CategoryPage({
   params,
 }: CategoryPageProps) {
-  const { category } = await params;
+  const { category: rawCategory } = await params;
+  const category = rawCategory.replace(/\.htm$/, "");
 
   const cat = CATEGORIES[category as keyof typeof CATEGORIES];
   if (!cat) {
@@ -99,7 +103,7 @@ export default async function CategoryPage({
         "@type": "ListItem",
         position: 2,
         name: cat.name,
-        item: `${siteUrl}/${category}`,
+        item: `${siteUrl}/${category}.htm`,
       },
     ],
   };
@@ -163,7 +167,7 @@ export default async function CategoryPage({
           >
             {validPage > 1 && (
               <Link
-                href={`/${category}${validPage - 1 === 1 ? "" : `?page=${validPage - 1}`}`}
+                href={`/${category}.htm${validPage - 1 === 1 ? "" : `?page=${validPage - 1}`}`}
                 className="inline-flex items-center gap-1 px-4 py-2 text-sm font-medium rounded-md border border-border bg-background hover:bg-accent transition-colors"
               >
                 <svg
@@ -193,7 +197,7 @@ export default async function CategoryPage({
                 return (
                   <Link
                     key={page}
-                    href={`/${category}${page === 1 ? "" : `?page=${page}`}`}
+                    href={`/${category}.htm${page === 1 ? "" : `?page=${page}`}`}
                     className={`inline-flex items-center justify-center w-10 h-10 text-sm font-medium rounded-md border transition-colors ${
                       page === validPage
                         ? "bg-primary text-primary-foreground border-primary"
@@ -223,7 +227,7 @@ export default async function CategoryPage({
 
             {validPage < totalPages && (
               <Link
-                href={`/${category}?page=${validPage + 1}`}
+                href={`/${category}.htm?page=${validPage + 1}`}
                 className="inline-flex items-center gap-1 px-4 py-2 text-sm font-medium rounded-md border border-border bg-background hover:bg-accent transition-colors"
               >
                 下一页

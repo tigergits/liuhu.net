@@ -2,12 +2,12 @@ import Link from "next/link"
 import { Code2, Rss } from "lucide-react"
 
 const CATEGORY_LINKS = [
-  { name: "随笔", href: "/essay" },
-  { name: "我的故事", href: "/mystory" },
-  { name: "我的日记", href: "/daily" },
-  { name: "我的游记", href: "/trip" },
-  { name: "技术文摘", href: "/lhwz" },
-  { name: "关于", href: "/about" },
+  { name: "随笔", href: "/essay.htm" },
+  { name: "我的故事", href: "/mystory.htm" },
+  { name: "我的日记", href: "/daily.htm" },
+  { name: "我的游记", href: "/trip.htm" },
+  { name: "技术文摘", href: "/lhwz.htm" },
+  { name: "关于", href: "/about.htm" },
 ]
 
 const LEGAL_LINKS = [

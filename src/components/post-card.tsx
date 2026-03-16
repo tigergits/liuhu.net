@@ -35,16 +35,8 @@ function getExcerpt(rawContent: string, maxLength: number = 120): string {
   return withoutMarkdown.slice(0, maxLength).replace(/\s+\S*$/, "") + "…"
 }
 
-function getCategoryPath(category: string): string {
-  const cat = CATEGORIES[category as keyof typeof CATEGORIES]
-  return cat?.path || `/${category}`
-}
-
 function getPostUrl(post: Post): string {
-  if (post.category === "trip") {
-    return `/others/${post.slug}`
-  }
-  return `${getCategoryPath(post.category)}/${post.slug}`
+  return `/${post.category}/${post.slug}.htm`
 }
 
 export function PostCard({ post, variant = "default" }: PostCardProps) {
