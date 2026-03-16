@@ -26,12 +26,15 @@ export async function generateStaticParams() {
   const categories = Object.keys(CATEGORIES).filter(
     (category) => category !== "about",
   );
-  const params = categories.map((category) => ({ category }));
-  // In dev mode, also handle .htm variants directly (production uses Cloudflare 200 rewrites)
   if (process.env.NODE_ENV === "development") {
-    params.push(...categories.map((category) => ({ category: `${category}.htm` })));
+    // dev: 同时支持带/不带 .htm，便于本地直接访问两种 URL
+    return [
+      ...categories.map((category) => ({ category })),
+      ...categories.map((category) => ({ category: `${category}.htm` })),
+    ];
   }
-  return params;
+  // 生产：只生成 .htm 参数 → 输出 mystory.htm.html，构建后脚本改名为 mystory.htm
+  return categories.map((category) => ({ category: `${category}.htm` }));
 }
 
 export async function generateMetadata({

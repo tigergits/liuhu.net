@@ -1,0 +1,1 @@
+对于静态页面网站来说，cloudflare使用pages就可以了，不要用worker。worker是针对于后端全栈，它会自作聪明的用opennext来编译，非常重，易出错。所以如果是简单的next.js+静态网站，使用pages。在create application时，在下面会有一行非常小的文字，使用pages来构建，选择那一行文字。

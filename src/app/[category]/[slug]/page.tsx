@@ -16,12 +16,15 @@ interface ArticlePageProps {
 
 export async function generateStaticParams() {
   const allPosts = getAllPosts()
-  const params = allPosts.map((post) => ({ category: post.category, slug: post.slug }))
-  // In dev mode, also handle .htm variants directly (production uses Cloudflare 200 rewrites)
   if (process.env.NODE_ENV === "development") {
-    params.push(...allPosts.map((post) => ({ category: post.category, slug: `${post.slug}.htm` })))
+    // dev: 同时支持带/不带 .htm，便于本地直接访问两种 URL
+    return [
+      ...allPosts.map((post) => ({ category: post.category, slug: post.slug })),
+      ...allPosts.map((post) => ({ category: post.category, slug: `${post.slug}.htm` })),
+    ]
   }
-  return params
+  // 生产：只生成 .htm slug → 输出 dl_5.htm.html，构建后脚本改名为 dl_5.htm
+  return allPosts.map((post) => ({ category: post.category, slug: `${post.slug}.htm` }))
 }
 
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {

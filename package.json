@@ -5,7 +5,7 @@
   "description": "程序员刘虎的故事 - 一个25+年开发经验的全栈工程师的个人网站",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node scripts/rename-htm.mjs",
     "start": "next start",
     "lint": "next lint"
   },
