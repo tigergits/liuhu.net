@@ -4,27 +4,8 @@
 # 2) 新的无扩展名 URL 统一 301 到 .htm（统一收录入口）
 
 # ------------------------------------------------------------
-# A. 新 URL -> 旧 .htm（301）
-# ------------------------------------------------------------
-
-# 分类页
-/essay     /essay.htm    301
-/mystory   /mystory.htm  301
-/daily     /daily.htm    301
-/trip      /trip.htm     301
-/lhwz      /lhwz.htm     301
-/about     /about.htm    301
-
-# 文章页
-/essay/:slug    /essay/:slug.htm    301
-/mystory/:slug  /mystory/:slug.htm  301
-/daily/:slug    /daily/:slug.htm    301
-/trip/:slug     /trip/:slug.htm     301
-/lhwz/:slug     /lhwz/:slug.htm     301
-/about/:slug    /about/:slug.htm    301
-
-# ------------------------------------------------------------
-# B. 旧 .htm URL -> 新路由内容（200 rewrite，地址栏不变）
+# A. 旧 .htm URL -> 新路由内容（200 rewrite，地址栏不变）
+#    必须放在 301 规则之前，否则 /:slug.htm 会被 /:slug->/:slug.htm 301 无限匹配
 # ------------------------------------------------------------
 
 # 分类页（保留 .htm 显示）
@@ -45,6 +26,27 @@
 
 # 历史路径兼容：旧站部分游记使用 /others/
 /others/:slug.htm   /trip/:slug     200
+
+# ------------------------------------------------------------
+# B. 新 URL -> 旧 .htm（301）
+#    放在 200 rewrite 之后，确保 .htm URL 不会再次触发此规则
+# ------------------------------------------------------------
+
+# 分类页
+/essay     /essay.htm    301
+/mystory   /mystory.htm  301
+/daily     /daily.htm    301
+/trip      /trip.htm     301
+/lhwz      /lhwz.htm     301
+/about     /about.htm    301
+
+# 文章页
+/essay/:slug    /essay/:slug.htm    301
+/mystory/:slug  /mystory/:slug.htm  301
+/daily/:slug    /daily/:slug.htm    301
+/trip/:slug     /trip/:slug.htm     301
+/lhwz/:slug     /lhwz/:slug.htm     301
+/about/:slug    /about/:slug.htm    301
 
 # 首页旧文件名兼容
 /index.htm    /    301

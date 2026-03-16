@@ -26,10 +26,12 @@ export async function generateStaticParams() {
   const categories = Object.keys(CATEGORIES).filter(
     (category) => category !== "about",
   );
-  return [
-    ...categories.map((category) => ({ category })),
-    ...categories.map((category) => ({ category: `${category}.htm` })),
-  ];
+  const params = categories.map((category) => ({ category }));
+  // In dev mode, also handle .htm variants directly (production uses Cloudflare 200 rewrites)
+  if (process.env.NODE_ENV === "development") {
+    params.push(...categories.map((category) => ({ category: `${category}.htm` })));
+  }
+  return params;
 }
 
 export async function generateMetadata({

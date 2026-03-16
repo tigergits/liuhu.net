@@ -16,10 +16,12 @@ interface ArticlePageProps {
 
 export async function generateStaticParams() {
   const allPosts = getAllPosts()
-  return [
-    ...allPosts.map((post) => ({ category: post.category, slug: post.slug })),
-    ...allPosts.map((post) => ({ category: post.category, slug: `${post.slug}.htm` })),
-  ]
+  const params = allPosts.map((post) => ({ category: post.category, slug: post.slug }))
+  // In dev mode, also handle .htm variants directly (production uses Cloudflare 200 rewrites)
+  if (process.env.NODE_ENV === "development") {
+    params.push(...allPosts.map((post) => ({ category: post.category, slug: `${post.slug}.htm` })))
+  }
+  return params
 }
 
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
