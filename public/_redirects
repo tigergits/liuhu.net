@@ -4,7 +4,10 @@
 #   Next.js generateStaticParams() 使用 .htm 后缀参数（生产环境），
 #   构建后脚本将 *.htm.html 改名为 *.htm，
 #   Cloudflare 直接服务 .htm 静态文件，无需 200 rewrite。
-#   只有 .htm 文件不存在的 URL 才会落到下面的规则。
+#
+# 注意：Cloudflare Pages 的 _redirects 规则优先于静态文件，
+#   因此文章页（/category/:slug）不能添加 → .htm 的重定向规则，
+#   否则 /daily/cms_3.htm 会被 slug=cms_3.htm 匹配，重定向到 cms_3.htm.htm，造成无限循环。
 
 # ------------------------------------------------------------
 # A. 特殊处理：about.htm（about 使用独立路由，不走 [category] 动态路由）
@@ -29,13 +32,10 @@
 /lhwz      /lhwz.htm     301
 /about     /about.htm    301
 
-# 文章页
-/essay/:slug    /essay/:slug.htm    301
-/mystory/:slug  /mystory/:slug.htm  301
-/daily/:slug    /daily/:slug.htm    301
-/trip/:slug     /trip/:slug.htm     301
-/lhwz/:slug     /lhwz/:slug.htm     301
-/about/:slug    /about/:slug.htm    301
+# 文章页：不添加 /:slug → /:slug.htm 规则！
+# 原因：Cloudflare 会先处理 _redirects，导致 /daily/cms_3.htm 匹配 slug=cms_3.htm
+# 再重定向到 cms_3.htm.htm，产生无限循环。
+# 静态文件 daily/cms_3.htm 已正确生成，Cloudflare 会直接服务，无需重定向。
 
 # 首页旧文件名兼容
 /index.htm    /    301
