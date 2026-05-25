@@ -6,6 +6,7 @@ import { getPostsByCategory } from "@/lib/posts";
 import { PostCard } from "@/components/post-card";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { JsonLd } from "@/components/json-ld";
+import { DisplayAd } from "@/components/ads/display-ad";
 
 const POSTS_PER_PAGE = 20;
 
@@ -164,6 +165,8 @@ export default async function CategoryPage({
             ))}
           </div>
         )}
+
+        <DisplayAd />
 
         {totalPages > 1 && (
           <nav

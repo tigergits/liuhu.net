@@ -4,6 +4,7 @@ import { SiteHeader } from '@/components/site-header'
 import { Footer } from '@/components/footer'
 import { CookieConsent } from '@/components/cookie-consent'
 import { GoogleAnalytics } from '@/components/google-analytics'
+import { AdsenseScript } from '@/components/ads/adsense-script'
 import '@/app/globals.css'
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.liuhu.net'
@@ -51,6 +52,7 @@ export default function RootLayout({
           <CookieConsent />
         </ThemeProvider>
         <GoogleAnalytics />
+        <AdsenseScript />
       </body>
     </html>
   )

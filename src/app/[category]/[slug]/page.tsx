@@ -7,6 +7,8 @@ import { RelatedPosts } from '@/components/related-posts'
 import { SocialShare } from '@/components/social-share'
 import { PostComments } from '@/components/post-comments'
 import { JsonLd } from '@/components/json-ld'
+import { InArticleAd } from '@/components/ads/in-article-ad'
+import { SidebarAd } from '@/components/ads/sidebar-ad'
 import { CalendarDays, FolderOpen } from 'lucide-react'
 import Link from 'next/link'
 
@@ -214,6 +216,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               />
             </div>
 
+            <InArticleAd />
+
             {/* Post navigation */}
             <PostNavigation
               category={category}
@@ -252,6 +256,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                   了解更多 →
                 </Link>
               </div>
+
+              <SidebarAd />
             </div>
           </aside>
         </div>
